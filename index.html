@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio - Deeksha Elangovan</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+      scroll-behavior:smooth;
+    }
+
+    :root{
+      --bg:#f8f9ff;
+      --text:#111;
+      --card:#ffffff;
+      --primary:#0077ff;
+      --shadow:rgba(0,0,0,0.12);
+      --border:rgba(0,0,0,0.08);
+    }
+
+    body.dark{
+      --bg:#0b0f19;
+      --text:#ffffff;
+      --card:#141a28;
+      --primary:#00e5ff;
+      --shadow:rgba(0,229,255,0.2);
+      --border:rgba(0,229,255,0.25);
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      transition:0.4s;
+    }
+
+    /* Smooth section spacing */
+    section{
+      padding:90px 80px;
+      text-align:center;
+    }
+
+    /* Loader */
+    #loader{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:var(--bg);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
+    }
+
+    .spinner{
+      width:70px;
+      height:70px;
+      border:8px solid rgba(0,0,0,0.1);
+      border-top:8px solid var(--primary);
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+    }
+
+    @keyframes spin{
+      100%{transform:rotate(360deg);}
+    }
+
+    /* Navbar */
+    header{
+      position:fixed;
+      top:0;
+      width:100%;
+      z-index:1000;
+      background:rgba(255, 255, 255, 0.88);
+      backdrop-filter:blur(15px);
+      padding:16px 80px;
+      border-bottom:1px solid var(--border);
+      animation:fadeDown 1s ease;
+      transition:0.4s;
+    }
+
+    body.dark header{
+      background:rgba(11, 15, 25, 0.92);
+      border-bottom:1px solid var(--border);
+    }
+
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:30px;
+      font-weight:700;
+      letter-spacing:0.5px;
+    }
+
+    .logo span{
+      color:var(--primary);
+    }
+
+    .nav-links{
+      display:flex;
+      list-style:none;
+      gap:28px;
+      align-items:center;
+    }
+
+    .nav-links li a{
+      text-decoration:none;
+      color:var(--text);
+      font-size:16px;
+      transition:0.3s;
+      font-weight:500;
+      position:relative;
+    }
+
+    .nav-links li a::after{
+      content:"";
+      width:0%;
+      height:2px;
+      background:var(--primary);
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      transition:0.3s;
+      border-radius:2px;
+    }
+
+    .nav-links li a:hover::after{
+      width:100%;
+    }
+
+    .btn{
+      text-decoration:none;
+      background:var(--primary);
+      padding:11px 22px;
+      border-radius:30px;
+      color:white;
+      font-weight:600;
+      transition:0.4s;
+      box-shadow:0 6px 18px var(--shadow);
+      display:inline-block;
+      border:none;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 30px var(--shadow);
+    }
+
+    .btn.outline{
+      background:transparent;
+      border:2px solid var(--primary);
+      color:var(--primary);
+    }
+
+    .btn.outline:hover{
+      background:var(--primary);
+      color:white;
+    }
+
+    .btn.small{
+      padding:9px 16px;
+      font-size:14px;
+    }
+
+    /* Premium Dark Button */
+    .toggle-btn{
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      cursor:pointer;
+      margin-left:15px;
+      font-size:20px;
+      color:var(--primary);
+      background:rgba(255,255,255,0.35);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--border);
+      box-shadow:0 10px 25px rgba(0,0,0,0.18);
+      transition:0.4s;
+    }
+
+    body.dark .toggle-btn{
+      background:rgba(0,229,255,0.12);
+      border:1px solid rgba(0,229,255,0.4);
+      box-shadow:0 0 25px rgba(0,229,255,0.45);
+    }
+
+    .toggle-btn:hover{
+      transform:scale(1.15) rotate(12deg);
+    }
+
+    /* Mobile Menu */
+    .menu-btn{
+      display:none;
+      font-size:26px;
+      color:var(--primary);
+      cursor:pointer;
+    }
+
+    #menu-toggle{
+      display:none;
+    }
+
+    /* Home */
+    .home{
+      min-height:100vh;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:160px 80px 80px;
+      gap:50px;
+      position:relative;
+    }
+
+    /* Decorative background blobs */
+    .home::before{
+      content:"";
+      position:absolute;
+      top:100px;
+      left:-100px;
+      width:300px;
+      height:300px;
+      background:rgba(0,119,255,0.15);
+      border-radius:50%;
+      filter:blur(80px);
+      z-index:-1;
+    }
+
+    .home::after{
+      content:"";
+      position:absolute;
+      bottom:60px;
+      right:-120px;
+      width:350px;
+      height:350px;
+      background:rgba(0,229,255,0.15);
+      border-radius:50%;
+      filter:blur(90px);
+      z-index:-1;
+    }
+
+    .home-content{
+      flex:1;
+      animation:slideLeft 1.2s ease;
+    }
+
+    .home-content h3{
+      font-size:20px;
+      opacity:0.8;
+    }
+
+    .home-content h1{
+      font-size:58px;
+      color:var(--primary);
+      line-height:1.1;
+    }
+
+    .typing{
+      font-size:25px;
+      margin:10px 0;
+      overflow:hidden;
+      border-right:3px solid var(--primary);
+      white-space:nowrap;
+      width:100%;
+      max-width:380px;
+      display:inline-block;
+      animation:typing 3s steps(30) infinite alternate,
+               blink 0.7s infinite;
+    }
+
+    .home-content p{
+      max-width:540px;
+      margin-top:18px;
+      font-size:16px;
+      line-height:1.7;
+      opacity:0.9;
+    }
+
+    .home-buttons{
+      margin-top:28px;
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    /* Social Icons */
+    .social-icons{
+      margin-top:30px;
+      display:flex;
+      gap:18px;
+      align-items:center;
+    }
+
+    .social-icons a{
+      width:50px;
+      height:50px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      border-radius:50%;
+      background:var(--card);
+      color:var(--primary);
+      font-size:21px;
+      transition:0.4s;
+      border:1px solid var(--border);
+      box-shadow:0 6px 18px var(--shadow);
+    }
+
+    .social-icons a:hover{
+      transform:translateY(-6px) scale(1.1);
+      box-shadow:0 12px 30px var(--shadow);
+    }
+
+    /* Profile Card */
+    .home-image{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      animation:slideRight 1.2s ease;
+    }
+
+    .profile-card{
+      width:360px;
+      background:var(--card);
+      padding:30px 25px;
+      border-radius:22px;
+      box-shadow:0 12px 30px var(--shadow);
+      text-align:center;
+      border:2px solid rgba(0,119,255,0.25);
+      transition:0.4s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .profile-card::before{
+      content:"";
+      position:absolute;
+      top:-40px;
+      left:-40px;
+      width:150px;
+      height:150px;
+      background:rgba(0,119,255,0.15);
+      border-radius:50%;
+      filter:blur(40px);
+    }
+
+    .profile-card:hover{
+      transform:translateY(-12px);
+    }
+
+    .profile-card img{
+      width:210px;
+      height:210px;
+      border-radius:50%;
+      border:6px solid var(--primary);
+      object-fit:cover;
+      margin-bottom:15px;
+      box-shadow:0 10px 20px var(--shadow);
+    }
+
+    /* Titles */
+    .section-title{
+      font-size:38px;
+      margin-bottom:35px;
+      color:var(--primary);
+      font-weight:700;
+    }
+
+    .section-title::after{
+      content:"";
+      width:90px;
+      height:4px;
+      background:var(--primary);
+      display:block;
+      margin:12px auto;
+      border-radius:5px;
+    }
+
+    /* Card */
+    .card{
+      background:var(--card);
+      padding:28px;
+      border-radius:20px;
+      box-shadow:0 10px 25px var(--shadow);
+      transition:0.4s;
+      border:1px solid var(--border);
+    }
+
+    .card:hover{
+      transform:translateY(-10px);
+    }
+
+    /* Skills */
+    .skills-container{
+      max-width:950px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:25px;
+      text-align:left;
+    }
+
+    .skill-box h3{
+      font-size:16px;
+      margin-bottom:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .progress-bar{
+      width:100%;
+      height:12px;
+      background:rgba(0,0,0,0.12);
+      border-radius:10px;
+      overflow:hidden;
+    }
+
+    body.dark .progress-bar{
+      background:rgba(255,255,255,0.15);
+    }
+
+    .progress{
+      height:100%;
+      background:var(--primary);
+      border-radius:10px;
+      animation:fill 2s ease;
+    }
+
+    /* Extra Skill Cards */
+    .skill-cards{
+      max-width:1000px;
+      margin:55px auto 0;
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:20px;
+    }
+
+    .mini-skill{
+      text-align:center;
+      padding:22px;
+      font-weight:600;
+      border-left:6px solid var(--primary);
+    }
+
+    .mini-skill i{
+      font-size:32px;
+      color:var(--primary);
+      margin-bottom:12px;
+    }
+
+    /* Projects Section */
+    .projects-container{
+      max-width:1100px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:25px;
+      text-align:left;
+    }
+
+    .project-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:20px;
+      padding:28px;
+      background:var(--card);
+      box-shadow:0 10px 25px var(--shadow);
+      transition:0.4s;
+      border-left:6px solid var(--primary);
+      border:1px solid var(--border);
+    }
+
+    .project-card::before{
+      content:"";
+      position:absolute;
+      top:-60px;
+      right:-60px;
+      width:160px;
+      height:160px;
+      background:rgba(0,119,255,0.12);
+      border-radius:50%;
+      filter:blur(60px);
+      z-index:0;
+    }
+
+    .project-card *{
+      position:relative;
+      z-index:1;
+    }
+
+    .project-card:hover{
+      transform:translateY(-14px);
+    }
+
+    .project-card h3{
+      font-size:22px;
+      color:var(--primary);
+      margin-bottom:12px;
+    }
+
+    .project-card p{
+      font-size:14px;
+      line-height:1.7;
+      opacity:0.88;
+      margin-bottom:15px;
+    }
+
+    .project-tech{
+      margin-bottom:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .project-tech span{
+      background:rgba(0,119,255,0.1);
+      color:var(--primary);
+      padding:6px 12px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:600;
+    }
+
+    body.dark .project-tech span{
+      background:rgba(0,229,255,0.15);
+    }
+
+    /* Scroll Animation */
+    .scroll-animate{
+      opacity:0;
+      transform:translateY(50px);
+      animation:scrollFade 1s ease forwards;
+      animation-timeline:view();
+      animation-range:entry 20% cover 30%;
+    }
+
+    @keyframes scrollFade{
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    /* Scroll Top Button */
+    #topBtn{
+      position:fixed;
+      bottom:30px;
+      right:30px;
+      background:var(--primary);
+      color:white;
+      border:none;
+      padding:14px 16px;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:18px;
+      display:none;
+      box-shadow:0 8px 20px var(--shadow);
+      transition:0.4s;
+      z-index:1000;
+    }
+
+    #topBtn:hover{
+      transform:scale(1.15);
+    }
+
+    /* Contact Form */
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    form input, form textarea{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,0.2);
+      background:#f5f7ff;
+      outline:none;
+      transition:0.3s;
+    }
+
+    form input:focus, form textarea:focus{
+      border:1px solid var(--primary);
+      box-shadow:0 0 10px rgba(0,119,255,0.25);
+    }
+
+    body.dark form input,
+    body.dark form textarea{
+      background:#0b0f19;
+      color:white;
+      border:1px solid rgba(255,255,255,0.2);
+    }
+
+    form textarea{
+      height:130px;
+      resize:none;
+    }
+
+    /* Footer */
+    footer{
+      text-align:center;
+      padding:40px 20px;
+      background:var(--card);
+      border-top:1px solid var(--border);
+    }
+
+    footer h3{
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    footer p{
+      opacity:0.85;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    /* Animations */
+    @keyframes fadeDown{
+      from{opacity:0;transform:translateY(-30px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    @keyframes slideLeft{
+      from{opacity:0;transform:translateX(-60px);}
+      to{opacity:1;transform:translateX(0);}
+    }
+
+    @keyframes slideRight{
+      from{opacity:0;transform:translateX(60px);}
+      to{opacity:1;transform:translateX(0);}
+    }
+
+    @keyframes typing{
+      from{width:0;}
+      to{width:380px;}
+    }
+
+    @keyframes blink{
+      50%{border-color:transparent;}
+    }
+
+    @keyframes fill{
+      from{width:0;}
+    }
+
+    /* Responsive */
+    @media(max-width:1000px){
+      header{
+        padding:15px 30px;
+      }
+
+      section{
+        padding:80px 30px;
+      }
+
+      .home{
+        padding:150px 30px 70px;
+      }
+
+      .home-content h1{
+        font-size:48px;
+      }
+    }
+
+    @media(max-width:900px){
+      .menu-btn{
+        display:block;
+      }
+
+      .nav-links{
+        position:absolute;
+        top:75px;
+        left:0;
+        width:100%;
+        flex-direction:column;
+        background:var(--card);
+        padding:25px;
+        gap:20px;
+        display:none;
+        animation:fadeDown 0.5s ease;
+        box-shadow:0 8px 15px var(--shadow);
+        border-bottom:1px solid var(--border);
+      }
+
+      #menu-toggle:checked ~ .nav-links{
+        display:flex;
+      }
+
+      .home{
+        flex-direction:column;
+        text-align:center;
+        padding:150px 20px 70px;
+      }
+
+      .home-content h1{
+        font-size:42px;
+      }
+
+      .home-buttons{
+        justify-content:center;
+      }
+
+      .social-icons{
+        justify-content:center;
+      }
+
+      .typing{
+        max-width:100%;
+      }
+
+      .profile-card{
+        width:100%;
+        max-width:360px;
+      }
+    }
+
+    @media(max-width:500px){
+      header{
+        padding:14px 18px;
+      }
+
+      .logo{
+        font-size:22px;
+      }
+
+      .home-content h1{
+        font-size:34px;
+      }
+
+      .typing{
+        font-size:20px;
+      }
+
+      .btn{
+        width:100%;
+        text-align:center;
+      }
+
+      .home-buttons{
+        flex-direction:column;
+        align-items:center;
+      }
+
+      .toggle-btn{
+        width:42px;
+        height:42px;
+        font-size:18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <h2 class="logo">Deeksha<span> Elangovan</span></h2>
+
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="menu-btn">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div style="display:flex; align-items:center;">
+        <i class="fa-solid fa-moon toggle-btn" id="darkToggle"></i>
+        <a href="#contact" class="btn">Hire Me</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Home -->
+  <section class="home" id="home">
+    <div class="home-content">
+      <h3>Hello 👋 I'm</h3>
+      <h1>Deeksha Elangovan</h1>
+      <h2 class="typing">Web Developer | UI Designer</h2>
+
+      <p>
+        I build modern responsive websites with clean UI, smooth animations
+        and professional layouts.
+      </p>
+
+      <div class="home-buttons">
+        <a href="#projects" class="btn">My Projects</a>
+        <a href="Deeksha.pdf" download class="btn outline">Download Resume</a>
+      </div>
+
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/deeks29/"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://github.com/deeksha2829"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+
+    <div class="home-image">
+      <div class="profile-card">
+        <img src="IMG-20250815-WA0008.jpg" alt="Profile">
+        <h2 style="color:var(--primary);">Deeksha</h2>
+        <p style="opacity:0.8;">Frontend Developer | UI Designer</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about scroll-animate" id="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="card" style="max-width:850px; margin:auto;">
+      <p style="font-size:15px; line-height:1.8; opacity:0.85;">
+        I am a passionate and dedicated Web Developer with a strong interest in designing and developing attractive, responsive, and user-friendly websites. 
+        I enjoy creating modern and visually appealing user interfaces while ensuring clean, efficient, and well-structured code. 
+        I focus on delivering smooth animations and interactive experiences that enhance user engagement and provide a seamless browsing experience across all devices.
+        With a continuous learning mindset, I always explore new technologies and frameworks to improve my development skills and stay updated with current industry trends. 
+        My long-term goal is to become a highly skilled software developer and contribute to innovative projects in a reputed organization, where I can apply my technical knowledge, creativity, and problem-solving abilities to build impactful digital solution.
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills scroll-animate" id="skills">
+    <h2 class="section-title">My Skills</h2>
+
+    <div class="skills-container">
+
+      <div class="skill-box card">
+        <h3>HTML <span>95%</span></h3>
+        <div class="progress-bar">
+          <div class="progress" style="width:95%;"></div>
+        </div>
+      </div>
+
+      <div class="skill-box card">
+        <h3>CSS <span>90%</span></h3>
+        <div class="progress-bar">
+          <div class="progress" style="width:90%;"></div>
+        </div>
+      </div>
+
+      <div class="skill-box card">
+        <h3>JavaScript <span>80%</span></h3>
+        <div class="progress-bar">
+          <div class="progress" style="width:80%;"></div>
+        </div>
+      </div>
+
+      <div class="skill-box card">
+        <h3>C <span>90%</span></h3>
+        <div class="progress-bar">
+          <div class="progress" style="width:75%;"></div>
+        </div>
+      </div>
+
+      <div class="skill-box card">
+        <h3>C++ <span>70%</span></h3>
+        <div class="progress-bar">
+          <div class="progress" style="width:70%;"></div>
+        </div>
+      </div>
+
+      <div class="skill-box card">
+        <h3>SQL <span>85%</span></h3>
+        <div class="progress-bar">
+          <div class="progress" style="width:85%;"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="skill-cards">
+      <div class="card mini-skill">
+        <i class="fa-brands fa-github"></i>
+        GitHub
+      </div>
+
+      <div class="card mini-skill">
+        <i class="fa-brands fa-bootstrap"></i>
+        Bootstrap
+      </div>
+
+      <div class="card mini-skill">
+        <i class="fa-brands fa-js"></i>
+        ES6
+      </div>
+
+      <div class="card mini-skill">
+        <i class="fa-solid fa-database"></i>
+        Database
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="projects scroll-animate" id="projects">
+    <h2 class="section-title">My Projects</h2>
+
+    <div class="projects-container">
+
+      <div class="project-card">
+        <h3>👗 Wearify</h3>
+        <p>
+          Responsive online dress shopping website with modern UI and cart system.
+        </p>
+
+        <div class="project-tech">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+        </div>
+
+        <a href="#" class="btn small">View Project</a>
+      </div>
+
+      <div class="project-card">
+        <h3>🎓 Smart Scholarship Portal</h3>
+        <p>
+          Web based student management system to manage student details and records.
+        </p>
+
+        <div class="project-tech">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+        </div>
+
+        <a href="https://deeksha2829.github.io/smartschorshipportal/" class="btn small">View Project</a>
+      </div>
+
+      <div class="project-card">
+        <h3>🎬 Cine Cloud</h3>
+        <p>
+          UI Design for online OTT Platform
+        </p>
+
+        <div class="project-tech">
+          <span>Figma</span>
+          <span>CSS</span>
+          <span>API</span>
+        </div>
+
+        <a href="#" class="btn small">View Project</a>
+      </div>
+
+      <div class="project-card">
+        <h3>⚖️ AI Law Assist</h3>
+        <p>
+          Smart AI tool providing legal guidance, document support, and case help 
+        </p>
+
+        <div class="project-tech">
+          <span>Figma</span>
+          <span>CSS</span>
+          <span>API</span>
+        </div>
+
+        <a href="#" class="btn small">View Project</a>
+      </div>
+
+      <div class="project-card">
+        <h3>🤖 Campus Connect AI</h3>
+        <p>
+          AI chatbot guiding students through college admissions and fees
+        </p>
+
+        <div class="project-tech">
+          <span>Figma</span>
+          <span>CSS</span>
+          <span>API</span>
+        </div>
+
+        <a href="#" class="btn small">View Project</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact scroll-animate" id="contact">
+    <h2 class="section-title">Contact Me</h2>
+
+    <div class="card" style="max-width:650px; margin:auto;">
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <h3>Deeksha Elangovan</h3>
+    <p><i class="fa-solid fa-phone"></i> +91 88388 09367</p>
+    <p><i class="fa-solid fa-envelope"></i> deekshaaae@gmail.com</p>
+    <p><i class="fa-solid fa-location-dot"></i> Erode, Tamil Nadu, India</p>
+    <br>
+    <p>© 2026 Deeksha | All Rights Reserved</p>
+  </footer>
+
+  <!-- Scroll Top Button -->
+  <button id="topBtn"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <script>
+    // Loader
+    window.onload = function(){
+      document.getElementById("loader").style.display = "none";
+    }
+
+    // Dark Mode Toggle
+    const toggleBtn = document.getElementById("darkToggle");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+
+      if(document.body.classList.contains("dark")){
+        toggleBtn.classList.remove("fa-moon");
+        toggleBtn.classList.add("fa-sun");
+      } else {
+        toggleBtn.classList.remove("fa-sun");
+        toggleBtn.classList.add("fa-moon");
+      }
+    });
+
+    // Scroll to Top Button
+    const topBtn = document.getElementById("topBtn");
+
+    window.onscroll = function(){
+      if(document.documentElement.scrollTop > 200){
+        topBtn.style.display = "block";
+      } else {
+        topBtn.style.display = "none";
+      }
+    };
+
+    topBtn.onclick = function(){
+      window.scrollTo({top:0, behavior:"smooth"});
+    };
+  </script>
+
+</body>
+</html>
